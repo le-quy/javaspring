@@ -115,59 +115,6 @@
 		        });
 		    });
 			 
-			 
-			function warningBeforeDelete(){
-				swal({
-					  title: "Xác nhận xóa",
-					  text: "Bạn có chắc chắn muốn xóa hay không",
-					  type: "warning",
-					  showCancelButton: true,
-					  confirmButtonClass: "btn-success",
-					  cancelButtonClass: "btn-danger",
-					  confirmButtonText: "Xác nhận",
-					  cancelButtonText: "Hủy bỏ",
-					}).then(function(isConfirm) {
-					  if (isConfirm) {
-							var ids = $('tbody input[type=checkbox]:checked').map(function () {
-					            return $(this).val();
-					        }).get();
-							deleteNew(ids);
-					  }
-					});
-			}
-			
-			
-			function deleteNew(data) {
-		        $.ajax({
-		            url: '${newAPI}',
-		            type: 'DELETE',
-		            contentType: 'application/json',
-		            data: JSON.stringify(data),
-		            success: function (result) {
-		                window.location.href = "${newURL}?page=1&limit=2&message=delete_success";
-		            },
-		            error: function (error) {
-		            	window.location.href = "${newURL}?page=1&limit=2&message=error_system";
-		            }
-		        });
-		    }
-			
-			function addMon(data) {
-				$.ajax({
-					url : '${newAPI}',
-					type : 'POST',
-					contentType : 'application/json',
-					data : JSON.stringify(data),
-					dataType : 'json',
-					success : function(result) {
-						window.location.href = "${editNewURL}?id="+result.id+"&message=insert_success ";
-					},
-					error : function(error) {
-						window.location.href = "${newURL}?page=1&limit=2&message=error_system";
-					}
-				});
-			}
-
 		</script>
 	</body>
 	</html>

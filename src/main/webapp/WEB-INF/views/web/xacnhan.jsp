@@ -1,8 +1,9 @@
+<%@ page import="com.laptrinhjavaweb.util.SecurityUtils" %>
 <%@include file="/common/taglib.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<c:url var="newAPI" value="/api/new"/>
-<c:url var="newURL" value="/san-pham"/>
+<c:url var="orderAPI" value="/api/order"/>
+<c:url var="monURL" value="/san-pham"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -13,7 +14,7 @@
 
 	<body>
 		<div class="main-content">
-		<form action="<c:url value='/san-pham'/>" id="formSubmit" method="get">		
+		<form action="<c:url value='/xac-nhan'/>" id="formSubmit" method="get">		
 				<div class="main-content-inner">
 					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
 						
@@ -45,6 +46,7 @@
 												 		<th style="text-align:center"><h4>Tên món</h4></th>
 														<th style="text-align:center"><h4>Số lượng</h4></th>
 														<th style="text-align:center"><h4>Đơn giá</h4></th>
+														<th style="text-align:center"><h4>Ghi chú</h4></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -53,9 +55,10 @@
 															<td width="120px"> <img alt="" width="100px" height="100px" src="${model.hinhAnh} "> </td>
 															<td><h4>${model.tenMon}</h4></td>
 															<td width="100px">
-															<input type="number" id="soluong" min="1" max="10" value="${soluong}">  
+															<input type="number" path="soLuong" min="1" max="10" value="${soluong}"/>  
 															</td>
-															<td><h4>${model.donGia} VNĐ</h4></td>
+															<td><h4> ${model.donGia} VNĐ</h4></td>
+															<td width="200px"><textarea rows="5" cols="40" id="ghichu" ></textarea></td>
 															<td width="50px">
 															<%--<c:url var="updateNewURL" value="/quan-tri/bai-viet/chinh-sua">
 																<c:param name="id" value = "${item.id}"></c:param>
@@ -66,13 +69,21 @@
 																 --%>
 																 <button class="btn btn-info" type="button"
 																	id="btndatmon">
-																	<i class="ace-icon fa fa-check bigger-110"></i> Xác nhận
+																	<i class="ace-icon fa fa-check bigger-110"></i> Thêm vào giỏ 
+																	</button>
+																	<br/>															
+																	 <button style="margin-top: 10px" class="btn btn-info" type="button"
+																	id="btntrolai">
+																	<i class="ace-icon fa fa-check bigger-110"></i> Trở lại
 																	</button>
 															</td>
 														</tr>
 												
 												</tbody>
-											</table>		
+											</table>
+											<input type="hidden" value="<%=SecurityUtils.getPrincipal().getUsername() %>" id="username" />		
+											<input type="hidden" value= "11"  id="thanhtien" />
+											<input type="hidden" value="${model.id}" id="idmon" name="idmon"/>
 											<center>
 										
 											</center>		
@@ -88,71 +99,45 @@
 		</div>
 		<!-- /.main-content -->
 		<script>
-			var totalPages = ${model.totalPage};
-			var currentPage = ${model.page};
-			$(function () {
-		        window.pagObj = $('#pagination').twbsPagination({
-		            totalPages: totalPages,
-		            visiblePages: 10,
-		            startPage: currentPage,
-		            onPageClick: function (event, page) {
-		            	if (currentPage != page) {
-		            		$('#limit').val(5);
-							$('#page').val(page);
-							$('#formSubmit').submit();
-						}
-		            }
-		        });
-		    });
+		
+			$('#btntrolai').click(function redirect(){ 	
+					window.location.href = "${monURL}?page=1&limit=5";
+			});
 			
-			function warningBeforeDelete(){
-				swal({
-					  title: "Xác nhận xóa",
-					  text: "Bạn có chắc chắn muốn xóa hay không",
-					  type: "warning",
-					  showCancelButton: true,
-					  confirmButtonClass: "btn-success",
-					  cancelButtonClass: "btn-danger",
-					  confirmButtonText: "Xác nhận",
-					  cancelButtonText: "Hủy bỏ",
-					}).then(function(isConfirm) {
-					  if (isConfirm) {
-							var ids = $('tbody input[type=checkbox]:checked').map(function () {
-					            return $(this).val();
-					        }).get();
-							deleteNew(ids);
-					  }
-					});
-			}
+			$('#btndatmon').click(function(e) {
+				e.preventDefault();
+				var data = {};
+				var formData = new FormData();
+				var username = $('#username').val();		
+				var idmon = ${model.id};
+				var soluong = $('#soluong').val();
+				var thanhtien = parseInt(soluong) * ${model.donGia};
+				
+				formData.append('username', username);
+				formData.append('idmon', parseInt(idmon) );
+				formData.append('soluong', parseInt(soluong));
+				formData.append('thanhtien', parseInt(thanhtien)); 
+				
+				$.each(formData, function(i, v) {
+					data["" + v.name + ""] = v.value;
+				});
+				
+				addOrder(data);
+			});
 			
 			
-			function deleteNew(data) {
-		        $.ajax({
-		            url: '${newAPI}',
-		            type: 'DELETE',
-		            contentType: 'application/json',
-		            data: JSON.stringify(data),
-		            success: function (result) {
-		                window.location.href = "${newURL}?page=1&limit=2&message=delete_success";
-		            },
-		            error: function (error) {
-		            	window.location.href = "${newURL}?page=1&limit=2&message=error_system";
-		            }
-		        });
-		    }
-			
-			function addMon(data) {
+			function addOrder(data) {
 				$.ajax({
-					url : '${newAPI}',
+					url : '${orderAPI}',
 					type : 'POST',
 					contentType : 'application/json',
 					data : JSON.stringify(data),
 					dataType : 'json',
 					success : function(result) {
-						window.location.href = "${editNewURL}?id="+result.id+"&message=insert_success ";
+						window.location.href = "${monURL}?page=1&limit=5&message=insert_success ";
 					},
 					error : function(error) {
-						window.location.href = "${newURL}?page=1&limit=2&message=error_system";
+						window.location.href = "${monURL}?page=1&limit=5&message=error_system";
 					}
 				});
 			}

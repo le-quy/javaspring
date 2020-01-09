@@ -33,6 +33,11 @@
 							placeholder="Mật khẩu">
 					</div>
 					<button type="submit" class="btn btn-primary" >Đăng nhập</button>
+					 
+					 <a style="margin-top: 20px" class="btn btn-primary" href="#">Đăng kí</a>
+		
+		       		 <a style="margin-top: 20px" class="btn btn-primary" href="/trang-chu">Trang chủ </a>
+ 				
 				</form>
 			</div>
 		</div>

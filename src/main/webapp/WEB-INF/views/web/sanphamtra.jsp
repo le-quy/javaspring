@@ -1,3 +1,4 @@
+<%@ page import="com.laptrinhjavaweb.util.SecurityUtils" %>
 <%@include file="/common/taglib.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -13,17 +14,21 @@
 
 	<body>
 		<div class="main-content">
-		<form action="<c:url value='/tra'/>" id="formSubmit" method="get">		
+		<form action="<c:url value='/tra'/>" id="formSubmit" method="get">	
+			<CENTER>
+			<div style="margin-top: 20px">
+				<h3><a> DOANH MỤC : </a> </h3>
+		        <a style="margin-left: 20px" class="btn btn-primary" href="/ca-phe?page=1&limit=5">CÀ PHÊ</a>
+		
+		        <a style="margin-left: 20px" class="btn btn-primary" href="/tra?page=1&limit=5">TRÀ TRÁI CÂY </a>
+ 				
+ 				<a style="margin-left: 20px" class="btn btn-primary" href="/da-xay?page=1&limit=5">ĐÁ XAY </a>
+		        
+		        <a style="margin-left: 20px" class="btn btn-primary" href="/sinh-to?page=1&limit=5">SINH TỐ</a>
+			</div>
+			</CENTER>	
 				<div class="main-content-inner">
-					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
-						<ul class="breadcrumb">
-							<%-- <li>
-								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="<c:url value='/trang-chu'/>">Trang chủ</a>
-							</li> --%>
-						</ul>
-						<!-- /.breadcrumb -->
-					</div>
+					
 					<div class="page-content">
 						<div class="row">
 						<c:if test="${not empty message}">
@@ -38,16 +43,17 @@
 										</div>
 									</div>
 								</div>
-								
+								<center> 
+								<lable for="table"> <h3> <a style="font-family: arial"> TRÀ  </a> </h3> </lable>
+								</center>
 								<div class="row">
 									<div class="col-xs-12">
-										<div class="table-responsive">
-										<center>
+										<div class="table-responsive">		
 											<table class="table table-bordered"  >
 												<thead>
 													<tr >
 														<th style="text-align:center"><h4>Hình ảnh</h4></th>
-														<th style="text-align:center"><h4>Tên món</h4></th>
+												 		<th style="text-align:center"><h4>Tên món</h4></th>
 														<th style="text-align:center"><h4>Đơn giá</h4></th>
 														<th style="text-align:center"><h4>Đặt món</h4></th>
 													</tr>
@@ -58,24 +64,24 @@
 															<td width="120px"> <img alt="" width="100px" height="100px" src="${item.hinhAnh} "> </td>
 															<td><h4>${item.tenMon}</h4></td>
 															<td><h4>${item.donGia} VNĐ</h4></td>
-															<td width="50px">
-														<%--<c:url var="updateNewURL" value="/quan-tri/bai-viet/chinh-sua">
-																<c:param name="id" value = "${item.id}"></c:param>
-															</c:url>																
-																<a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-																   title="Cập nhật bài viết" href='${updateNewURL}'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-																</a>
-																 --%>
-																 <button class="btn btn-info" type="button"
-																	id="datmon">
-																	<i class="ace-icon fa fa-check bigger-110"></i> Đặt món
-																	</button>
+															<td width="100px">
+																 	<c:url var="xacNhanMonURL" value="/xac-nhan">
+																	<c:param name="id" value = "${item.id}"></c:param>
+																	</c:url>
+																	<security:authorize access="isAnonymous()">
+																		<a class="btn btn-primary"
+																   	title="Đăng nhập" href='/dang-nhap'> đăng nhập để đặt món
+																	</a>
+																	</security:authorize>
+																	<security:authorize access="isAuthenticated()">	
+																	<a class="btn btn-primary"
+																   		title="Đặt món" href='${xacNhanMonURL}'> Đặt món
+																		</a></security:authorize>
 															</td>
 														</tr>
 													</c:forEach>
-												</tbody>
-											</table>
-											</center>
+												</tbody> 
+											</table>		
 											<center>
 											<ul class="pagination" id="pagination"></ul>
 											</center>		
@@ -108,42 +114,7 @@
 		            }
 		        });
 		    });
-			
-			function warningBeforeDelete(){
-				swal({
-					  title: "Xác nhận xóa",
-					  text: "Bạn có chắc chắn muốn xóa hay không",
-					  type: "warning",
-					  showCancelButton: true,
-					  confirmButtonClass: "btn-success",
-					  cancelButtonClass: "btn-danger",
-					  confirmButtonText: "Xác nhận",
-					  cancelButtonText: "Hủy bỏ",
-					}).then(function(isConfirm) {
-					  if (isConfirm) {
-							var ids = $('tbody input[type=checkbox]:checked').map(function () {
-					            return $(this).val();
-					        }).get();
-							deleteNew(ids);
-					  }
-					});
-			}
-			
-			
-			function deleteNew(data) {
-		        $.ajax({
-		            url: '${newAPI}',
-		            type: 'DELETE',
-		            contentType: 'application/json',
-		            data: JSON.stringify(data),
-		            success: function (result) {
-		                window.location.href = "${newURL}?page=1&limit=2&message=delete_success";
-		            },
-		            error: function (error) {
-		            	window.location.href = "${newURL}?page=1&limit=2&message=error_system";
-		            }
-		        });
-		    }
+			 
 		</script>
 	</body>
 	</html>

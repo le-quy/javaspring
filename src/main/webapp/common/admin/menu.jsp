@@ -38,22 +38,52 @@
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-list"></i>
                 <span class="menu-text"></span>
-                Quản lý bài viết
+                Quản lý sản phẩm
                 <b class="arrow fa fa-angle-down"></b>
             </a>
             <b class="arrow"></b>
             <ul class="submenu">
-                <li>
-                    <a href="<c:url value="/quan-tri/bai-viet/danh-sach?page=1&limit=2"/>">
+                  <li>
+                    <a href="<c:url value="/quan-tri/bai-viet/san-pham?page=1&limit=5"/>">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        DS bài viết
+                        Chỉnh sửa món
                     </a>
                     <b class="arrow"></b>
                 </li>
-                  <li>
-                    <a href="<c:url value="/quan-tri/bai-viet/danh-sach?page=1&limit=2"/>">
+                
+                <li>
+                    <a href="<c:url value="/quan-tri/bai-viet/editsan-pham"/>">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Danh sách món
+                        Thêm món mới
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    
+    <ul class="nav nav-list">
+        <li >
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-list"></i>
+                <span class="menu-text"></span>
+                Quản lý nhân viên
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                  <li>
+                    <a href="<c:url value="/quan-tri/bai-viet/san-pham?page=1&limit=5"/>">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Chỉnh sửa nhân viên
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                
+                <li>
+                    <a href="<c:url value="/quan-tri/bai-viet/editsan-pham"/>">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thêm nhân viên
                     </a>
                     <b class="arrow"></b>
                 </li>

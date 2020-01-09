@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.laptrinhjavaweb.converter.MonConverter;
 import com.laptrinhjavaweb.dto.MonDTO;
 import com.laptrinhjavaweb.entity.MonEntity;
-import com.laptrinhjavaweb.entity.NewEntity;
 import com.laptrinhjavaweb.repository.MonRepository;
 import com.laptrinhjavaweb.service.IMonService;
 @Service
@@ -24,8 +23,8 @@ public class MonService implements IMonService {
 		List<MonDTO> models = new ArrayList<>();
 		List<MonEntity> entities = monRepository.findAll(pageable).getContent();
 		for (MonEntity item : entities) {
-			MonDTO newModel = monConverter.toDTO(item);
-			models.add(newModel);
+			MonDTO Model = monConverter.toDTO(item);
+			models.add(Model);
 		}
 		return models;
 	}
@@ -53,6 +52,27 @@ public class MonService implements IMonService {
 		MonEntity entity = monRepository.findOne(id);
 		return monConverter.toDTO(entity);
 	}
+	@Override
+	public MonDTO save(MonDTO dto) {
+		MonEntity monEntity = new MonEntity();
+		if(dto.getId()!= null)
+		{ 
+			MonEntity oldmon = monRepository.findOne(dto.getId());
+			monEntity = monConverter.toEntity(oldmon,dto);
+		}
+		else
+		{ 
+			monEntity = monConverter.toEntity(dto);
+			
+		}
+		return monConverter.toDTO(monRepository.save(monEntity));
+	}
+	@Override
+	public void delete(long[] ids) {
+		for(long id: ids)
+		{
+			monRepository.delete(id);
+		}	
+	}
 	
-
 }

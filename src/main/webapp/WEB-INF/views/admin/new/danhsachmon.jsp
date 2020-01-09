@@ -1,19 +1,19 @@
 <%@include file="/common/taglib.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<c:url var="newAPI" value="/api/new"/>
-<c:url var="newURL" value="/quan-tri/bai-viet/danh-sach"/>
+<c:url var="sanphamAPI" value="/api/sanpham"/>
+<c:url var="sanphamURL" value="/quan-tri/bai-viet/san-pham"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Danh sách bài viết</title>
+		<title>Danh sách sản phẩm </title>
 	</head>
 
 	<body>
 		<div class="main-content">
-		<form action="<c:url value='/quan-tri/bai-viet/danh-sach'/>" id="formSubmit" method="get">		
+		<form action="<c:url value='/quan-tri/bai-viet/san-pham'/>" id="formSubmit" method="get">		
 				<div class="main-content-inner">
 					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
 						<ul class="breadcrumb">
@@ -36,7 +36,7 @@
 									<div class="table-btn-controls">
 										<div class="pull-right tableTools-container">
 											<div class="dt-buttons btn-overlap btn-group">
-											<c:url var="createNewURL" value="/quan-tri/bai-viet/chinh-sua"/> 
+											<c:url var="createNewURL" value="/quan-tri/bai-viet/editsan-pham"/> 
 												<a flag="info"
 												   class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip"
 												   title='Thêm bài viết' href="${createNewURL }">
@@ -61,19 +61,22 @@
 												<thead>
 													<tr>
 													<th><input type="checkbox" id="checkAll"></th>
-														<th>Tên bài viết</th>
-														<th>Mô tả ngắn</th>
-														<th>Thao tác</th>
+														<th style="text-align:center"><h4>Hình ảnh</h4></th>
+												 		<th style="text-align:center"><h4>Tên món</h4></th>
+														<th style="text-align:center"><h4>Đơn giá</h4></th>
+														<th style="text-align:center"><h4>Phân loại</h4></th>
 													</tr>
 												</thead>
 												<tbody>
 													<c:forEach var="item" items="${model.listResult}">
 														<tr>
 														<td><input type="checkbox" id="checkbox_${item.id}" value="${item.id}"></td>
-															<td>${item.title}</td>
-															<td>${item.shortDescription}</td>
+															<td width="120px"> <img alt="" width="100px" height="100px" src="${item.hinhAnh} "> </td>
+															<td><h4>${item.tenMon}</h4></td>
+															<td><h4>${item.donGia} VNĐ</h4></td>
+															<td><h4>${item.phanLoai}</h4></td>
 															<td>
-															<c:url var="updateNewURL" value="/quan-tri/bai-viet/chinh-sua">
+															<c:url var="updateNewURL" value="/quan-tri/bai-viet/editsan-pham">
 																<c:param name="id" value = "${item.id}"></c:param>
 															</c:url>																
 																<a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
@@ -107,7 +110,7 @@
 		            startPage: currentPage,
 		            onPageClick: function (event, page) {
 		            	if (currentPage != page) {
-		            		$('#limit').val(2);
+		            		$('#limit').val(5);
 							$('#page').val(page);
 							$('#formSubmit').submit();
 						}
@@ -115,7 +118,7 @@
 		        });
 		    });
 			
-			function warningBeforeDelete(){
+			 function warningBeforeDelete(){
 				swal({
 					  title: "Xác nhận xóa",
 					  text: "Bạn có chắc chắn muốn xóa hay không",
@@ -130,24 +133,28 @@
 							var ids = $('tbody input[type=checkbox]:checked').map(function () {
 					            return $(this).val();
 					        }).get();
-							deleteNew(ids);
+							deleteMon(ids);
 					  }
 					});
-			} 
-			function deleteNew(data) {
+					}
+			
+			
+			function deleteMon(data) {
 		        $.ajax({
-		            url: '${newAPI}',
+		            url: '${sanphamAPI}',
 		            type: 'DELETE',
 		            contentType: 'application/json',
 		            data: JSON.stringify(data),
 		            success: function (result) {
-		                window.location.href = "${newURL}?page=1&limit=2&message=delete_success";
+		                window.location.href = "${sanphamURL}?page=1&limit=5&message=delete_success";
 		            },
 		            error: function (error) {
-		            	window.location.href = "${newURL}?page=1&limit=2&message=error_system";
+		            	window.location.href = "${sanphamURL}?page=1&limit=5&message=error_system";
 		            }
 		        });
-		    }
+		    } 
+			
+			
 		</script>
 	</body>
 	</html>

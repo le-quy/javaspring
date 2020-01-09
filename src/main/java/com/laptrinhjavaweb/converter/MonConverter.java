@@ -11,8 +11,9 @@ public class MonConverter {
 		MonDTO result = new MonDTO();
 		result.setId(entity.getId());
 		result.setTenMon(entity.getTenMon());
-		result.setDonGia(entity.getDonGia());
+		result.setDonGia(entity.getDonGia());	
 		result.setHinhAnh(entity.getHinhAnh());
+		result.setPhanLoai(entity.getPhanLoai());
 		return result;
 	}
 	public MonEntity toEntity(MonDTO dto)
@@ -21,6 +22,15 @@ public class MonConverter {
 		result.setTenMon(dto.getTenMon());
 		result.setDonGia(dto.getDonGia());
 		result.setHinhAnh(dto.getHinhAnh());
+		result.setPhanLoai(dto.getPhanLoai());
+		return result;
+	}
+	public MonEntity toEntity(MonEntity result, MonDTO dto)
+	{ 
+		result.setTenMon(dto.getTenMon());
+		result.setDonGia(dto.getDonGia());
+		result.setHinhAnh(dto.getHinhAnh());
+		result.setPhanLoai(dto.getPhanLoai());
 		return result;
 	}
 }

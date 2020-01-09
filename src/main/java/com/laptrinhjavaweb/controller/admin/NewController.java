@@ -13,61 +13,55 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.laptrinhjavaweb.dto.NewDTO;
-import com.laptrinhjavaweb.service.ICategoryService;
-import com.laptrinhjavaweb.service.INewService;
+import com.laptrinhjavaweb.dto.MonDTO;
+import com.laptrinhjavaweb.service.IMonService;
 import com.laptrinhjavaweb.util.MessageUtil;
 
-@Controller(value = "newControllerOfAdmin")
+@Controller(value = "monControllerOfAdmin")
 
 public class NewController {
 	@Autowired
-	private INewService newService;
-	@Autowired 
-	private ICategoryService categoryService;
-	@Autowired
 	private MessageUtil messageUtil;
-	
-	@RequestMapping(value = "/quan-tri/bai-viet/danh-sach", method = RequestMethod.GET)
-	   public ModelAndView showList( @RequestParam("page") int page,
-			   						@RequestParam("limit") int limit,
-			   						HttpServletRequest request) {
-		 NewDTO model = new NewDTO(); 
-		 model.setPage(page);
-		 model.setLimit(limit);
-		 Pageable pageable = new PageRequest(page -1, limit);
-	      ModelAndView mav = new ModelAndView("admin/new/list");
-	      model.setListResult(newService.findAll(pageable));
-	      model.setTotalItem(newService.getTotalItem());
-	      model.setTotalPage((int) Math.ceil((double) model.getTotalItem() / model.getLimit()));
-		 if(request.getParameter("message") != null)
-	      { 
-	    	 Map<String,String> message = messageUtil.getMessage(request.getParameter("message"));
-	    	 mav.addObject("message", message.get("message"));
-	    	 mav.addObject("alert", message.get("alert"));
-	      }
+	@Autowired
+	private IMonService monService;
+
+	@RequestMapping(value = "/quan-tri/bai-viet/san-pham", method = RequestMethod.GET)
+	public ModelAndView listSanPham(@RequestParam("page") int page, @RequestParam("limit") int limit,
+			HttpServletRequest request) {
+		String userName = request.getParameter("userName");
+		MonDTO model = new MonDTO();
+		model.setPage(page);
+		model.setLimit(limit);
+		ModelAndView mav = new ModelAndView("admin/new/danhsachmon");
+		Pageable pageable = new PageRequest(page - 1, limit);
+		model.setListResult(monService.findAll(pageable));
+		model.setTotalItem(monService.getTotalItem());
+		model.setTotalPage((int) Math.ceil((double) model.getTotalItem() / model.getLimit()));
+
+		if (request.getParameter("message") != null) {
+			Map<String, String> message = messageUtil.getMessage(request.getParameter("message"));
+			mav.addObject("message", message.get("message"));
+			mav.addObject("alert", message.get("alert"));
+		}
+
 		mav.addObject("model", model);
-	      return mav;
+		mav.addObject("userName", userName);
+		return mav;
 	}
-	
-	@RequestMapping(value = "/quan-tri/bai-viet/chinh-sua", method = RequestMethod.GET)
-	   public ModelAndView editNew(@RequestParam(value = "id", required = false) Long id, HttpServletRequest request) {
-		NewDTO model = new NewDTO();
-	      ModelAndView mav = new ModelAndView("admin/new/edit");
-	      if(id != null)
-	      { 
-	    	  model = newService.findById(id);
-	      }
-	      if(request.getParameter("message") != null)
-	      { 
-	    	 Map<String,String> message = messageUtil.getMessage(request.getParameter("message"));
-	    	 mav.addObject("message", message.get("message"));
-	    	 mav.addObject("alert", message.get("alert"));
-	      }
-	      
-	      mav.addObject("categories", categoryService.findAll());
-	      mav.addObject("model", model);
-	      return mav;
+
+	@RequestMapping(value = "/quan-tri/bai-viet/editsan-pham", method = RequestMethod.GET)
+	public ModelAndView editSanPham(@RequestParam(value = "id", required = false) Long id, HttpServletRequest request) {
+		MonDTO model = new MonDTO();
+		ModelAndView mav = new ModelAndView("admin/new/chinhsuamon");
+		if (id != null) {
+			model = monService.findOneById(id);
+		}
+		if (request.getParameter("message") != null) {
+			Map<String, String> message = messageUtil.getMessage(request.getParameter("message"));
+			mav.addObject("message", message.get("message"));
+			mav.addObject("alert", message.get("alert"));
+		}
+		mav.addObject("model", model);
+		return mav;
 	}
-	
 }

@@ -26,7 +26,7 @@
 					</li>
 				</security:authorize>
 				<security:authorize access="isAuthenticated()">
-					<li class="nav-item"><h4> <a class="nav-link" href="#"><%=SecurityUtils.getPrincipal().getFullName() %></a> </h4>
+					<li class="nav-item"><h5> <a class="nav-link" href="#"> Chào, <%=SecurityUtils.getPrincipal().getFullName() %></a> </h4>
 					
 					</li>
 					<li class="nav-item"> <h4><a class="nav-link" href="<c:url value ='/thoat'/>">Thoát</a></li></h4>

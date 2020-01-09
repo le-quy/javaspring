@@ -6,6 +6,7 @@ public class MonDTO extends AbstractDTO<MonDTO> {
 	private Integer donGia;
 	private String phanLoai;
 	private String hinhAnh;
+	
 	public String getTenMon() {
 		return tenMon;
 	}

@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.laptrinhjavaweb.dto.MonDTO;
 import com.laptrinhjavaweb.service.impl.MonService;
 import com.laptrinhjavaweb.util.MessageUtil;
-import com.laptrinhjavaweb.util.SecurityUtils;
 
 @Controller(value = "homeControllerOfWeb")
 public class HomeController extends HttpServlet {
@@ -64,7 +62,6 @@ public class HomeController extends HttpServlet {
 	@RequestMapping(value = "/san-pham", method = RequestMethod.GET)
 	public ModelAndView sanPhamAll(@RequestParam("page") int page, @RequestParam("limit") int limit,
 			HttpServletRequest request) {
-		HttpSession session = request.getSession();
 		String userName = request.getParameter("userName");
 		MonDTO model = new MonDTO();
 		model.setPage(page);
@@ -74,12 +71,12 @@ public class HomeController extends HttpServlet {
 		model.setListResult(monService.findAll(pageable));
 		model.setTotalItem(monService.getTotalItem());
 		model.setTotalPage((int) Math.ceil((double) model.getTotalItem() / model.getLimit()));
-		/*
-		 * if(request.getParameter("message") != null) { Map<String,String> message =
-		 * messageUtil.getMessage(request.getParameter("message"));
-		 * mav.addObject("message", message.get("message")); mav.addObject("alert",
-		 * message.get("alert")); }
-		 */
+		
+		  if(request.getParameter("message") != null) { Map<String,String> message =
+		  messageUtil.getMessage(request.getParameter("message"));
+		  mav.addObject("message", message.get("message"));
+		  mav.addObject("alert",message.get("alert")); }
+		 
 		mav.addObject("model", model);
 		mav.addObject("userName", userName);
 		return mav;
@@ -158,7 +155,7 @@ public class HomeController extends HttpServlet {
 		model.setPage(page);
 		model.setLimit(limit);
 		String phanLoai = "sinh-to";
-		ModelAndView mav = new ModelAndView("web/sanphamdaxay");
+		ModelAndView mav = new ModelAndView("web/sanphamsinhto");
 		Pageable pageable = new PageRequest(page - 1, limit);
 		model.setListResult(monService.findAllByPhanLoai(phanLoai, pageable));
 		model.setTotalItem(monService.countByPhanLoai(phanLoai));

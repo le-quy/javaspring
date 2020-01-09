@@ -1,10 +1,12 @@
 package com.laptrinhjavaweb.dto;
 
-public class Order {
+public class OrderDTO {
 	private Long id;
 	private String userName;
 	private Long idMon;
-	private Integer giaTien;
+	private Integer soLuong;
+	private Integer thanhTien;
+	
 	public Long getId() {
 		return id;
 	}
@@ -23,11 +25,18 @@ public class Order {
 	public void setIdMon(Long idMon) {
 		this.idMon = idMon;
 	}
-	public Integer getGiaTien() {
-		return giaTien;
+	public Integer getSoLuong() {
+		return soLuong;
 	}
-	public void setGiaTien(Integer giaTien) {
-		this.giaTien = giaTien;
+	public void setSoLuong(Integer soLuong) {
+		this.soLuong = soLuong;
 	}
+	public Integer getThanhTien() {
+		return thanhTien;
+	}
+	public void setThanhTien(Integer thanhTien) {
+		this.thanhTien = thanhTien;
+	}
+
 	
 }
