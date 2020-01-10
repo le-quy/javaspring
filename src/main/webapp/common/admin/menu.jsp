@@ -73,7 +73,7 @@
             <b class="arrow"></b>
             <ul class="submenu">
                   <li>
-                    <a href="<c:url value="/quan-tri/bai-viet/san-pham?page=1&limit=5"/>">
+                    <a href="<c:url value="#"/>">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Chỉnh sửa nhân viên
                     </a>
@@ -81,7 +81,7 @@
                 </li>
                 
                 <li>
-                    <a href="<c:url value="/quan-tri/bai-viet/editsan-pham"/>">
+                    <a href="<c:url value="#"/>">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Thêm nhân viên
                     </a>

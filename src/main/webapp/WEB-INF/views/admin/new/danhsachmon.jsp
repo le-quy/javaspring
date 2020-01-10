@@ -82,6 +82,7 @@
 																<a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
 																   title="Cập nhật bài viết" href='${updateNewURL}'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 																</a>
+						
 															</td>
 														</tr>
 													</c:forEach>

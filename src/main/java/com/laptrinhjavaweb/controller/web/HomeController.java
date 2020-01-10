@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.laptrinhjavaweb.dto.MonDTO;
+import com.laptrinhjavaweb.dto.OrderDTO;
 import com.laptrinhjavaweb.service.impl.MonService;
+import com.laptrinhjavaweb.service.impl.OrderService;
 import com.laptrinhjavaweb.util.MessageUtil;
 
 @Controller(value = "homeControllerOfWeb")
@@ -28,6 +30,8 @@ public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	private MonService monService;
+	@Autowired
+	private OrderService orderService;
 	@Autowired
 	private MessageUtil messageUtil;
 
@@ -177,7 +181,7 @@ public class HomeController extends HttpServlet {
 	      ModelAndView mav = new ModelAndView("web/xacnhan");
 	      if(id != null)
 	      { 
-	    	  model = monService.findOneById(id);
+	    	  model = monService.findOneById(id);    	  
 	      }
 	      if(request.getParameter("message") != null)
 	      { 

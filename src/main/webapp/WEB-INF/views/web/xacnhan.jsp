@@ -81,9 +81,9 @@
 												
 												</tbody>
 											</table>
-											<input type="hidden" value="<%=SecurityUtils.getPrincipal().getUsername() %>" id="username" />		
-											<input type="hidden" value= "11"  id="thanhtien" />
-											<input type="hidden" value="${model.id}" id="idmon" name="idmon"/>
+											<input type="hidden" value="<%=SecurityUtils.getPrincipal().getUsername() %>" id="userName" name="userName" />		
+											<input type="hidden" value= "11"  id="thanhTien" name= "thanhTien" />
+											<input type="hidden" value="${model.id}" id="idMon" name="idMon"/>
 											<center>
 										
 											</center>		
@@ -141,7 +141,6 @@
 					}
 				});
 			}
-
 		</script>
 	</body>
 	</html>

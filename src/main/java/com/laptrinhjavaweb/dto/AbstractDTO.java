@@ -11,8 +11,6 @@ public class AbstractDTO<T> {
 	private Integer limit;
 	private Integer totalPage;
 	private Integer totalItem;
-	private String sortName;
-	private String sortBy;
 	private String alert;
 	private String message;
 	private String type;
@@ -59,18 +57,6 @@ public class AbstractDTO<T> {
 	}
 	public void setTotalItem(Integer totalItem) {
 		this.totalItem = totalItem;
-	}
-	public String getSortName() {
-		return sortName;
-	}
-	public void setSortName(String sortName) {
-		this.sortName = sortName;
-	}
-	public String getSortBy() {
-		return sortBy;
-	}
-	public void setSortBy(String sortBy) {
-		this.sortBy = sortBy;
 	}
 
 	public String getAlert() {

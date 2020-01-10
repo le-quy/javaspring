@@ -64,4 +64,5 @@ public class NewController {
 		mav.addObject("model", model);
 		return mav;
 	}
+	
 }

@@ -7,6 +7,11 @@ import org.springframework.security.core.userdetails.User;
 
 public class MyUser extends User {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1;
+
 	public MyUser(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked,
 			Collection<? extends GrantedAuthority> authorities) {

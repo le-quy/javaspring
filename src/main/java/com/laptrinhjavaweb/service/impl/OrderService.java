@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.laptrinhjavaweb.converter.OrderConverter;
 import com.laptrinhjavaweb.dto.OrderDTO;
@@ -33,7 +32,6 @@ public class OrderService implements IOrderService {
 
 
 		@Override
-		@Transactional
 		public OrderDTO save(OrderDTO dto) {
 			OrderEntity entity = new OrderEntity();
 			/*if(dto.getId()!= null)
@@ -48,7 +46,6 @@ public class OrderService implements IOrderService {
 		
 
 		@Override
-		@Transactional
 		public void delete(long[] ids) {	
 			for(long id: ids)
 			{
